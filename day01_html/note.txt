@@ -1,0 +1,75 @@
+
+一、搭建环境
+
+二、简单说明：
+	整个javaweb的学习是基于B/S软件结构来学习。
+	B: Browser 浏览器 -- html css js jquery 
+	S: server 服务器 -- servlet filter listener ***
+	
+	C/S : client server
+	优点：可以充分使用客户端资源
+	缺点：客户端需要单独安装软件
+	
+三、html
+	
+	一个设计优良的网页是由html css js三部分组成的，且三都分离
+	HTML 指的是超文本标记语言 (Hyper Text Markup Language)
+	HTML 使用标记标签来描述网页
+
+	标准格式：
+			<!DOCTYPE html>
+			<html lang="en">
+			<head>
+				<meta charset="UTF-8">
+				<title>Title</title>
+			</head>
+			<body>
+			  
+			</body>
+			</html>
+
+	注意事项：
+	    标签有两种，双标签和单标签 。标签又叫标记
+		双标签由开始标签和结束标签组成。结束标签前面有/.
+		开始标签与结束标签中间的部分，称为标签体
+
+		单标签在开始标签后加/,如  <meta charset="UTF-8"/>
+		单标签主要用来实现某一功能，没有标签体
+		规范是规范，实用是实用
+
+		标签属性要写在开始标签处，格式是键值对，键与值之间使用=连接
+
+		html标签根标签，用来定义一个网页，它有两个子标签,head标签和body标签
+		body标签用来展示网页内容
+		head标签用来告诉浏览器引擎如何解析网页
+		meta标签设置字符集格式
+		title标签用来设置网页标题
+
+    html语法：
+        ①标签不能交叉嵌套
+        ②标签必须正确关闭
+        ③属性必须有值，且值要加引号
+        ④注释不能嵌套
+
+    常用标签：
+        p h1`H6 div a img table form
+
+    实体：
+        <  &lt;
+        >  &gt;
+        空格 &nbsp;
+
+四、CSS 层叠样式表 Cascading Style Sheets
+
+    主要用来定义html标签在浏览器中显示的样式，如字体大小、背景颜色等
+    格式：由选择器和声明两部分组成。而声明是键值结构，键与值之间使用：连接，多个声明之间使用;连接
+
+    使用方式有3种：
+        内联样式 -- 使用style属性，缺点：html与样式耦合
+        style标签 -- 在head标签中定义一个style标签，缺点：多个页面不能共享
+        外联样式 -- 定义一个外部文件 ***
+
+    颜色值：
+        颜色名：red green blue grey
+        RGB值：rgb(0,255,100)
+        十六进制值： #0011ff;

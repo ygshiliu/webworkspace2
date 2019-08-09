@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>table_blank</title>
+</head>
+<body style="text-align: center">
+
+
+        <h1>学生成绩表</h1>
+    <!--table来定义一个表格域，用tr定义一行，用td定义一个单元格-->
+        <!--表格用来展示数据-->
+    <table width="60%" align="center" border="1px"  cellspacing="0" cellpadding="10">
+        <tr>
+            <th>序号</th>
+            <th>组</th>
+            <th>姓名</th>
+            <th>成绩</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <!--rowspan上下合并单元格-->
+            <td rowspan="2">1</td>
+            <td>张三</td>
+            <td>90</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>王五</td>
+            <td>90</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td rowspan="2">2</td>
+            <td>赵四</td>
+            <td>95</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>田七</td>
+            <td>95</td>
+        </tr>
+        <tr>
+            <!--左右合并单元格，合并几个单元格，指定几个-->
+            <td colspan="3">平均成绩</td>
+            <td>93</td>
+        </tr>
+
+    </table>
+   
+</body>
+</html>

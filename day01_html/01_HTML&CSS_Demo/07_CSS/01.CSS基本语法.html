@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CSS基本语法</title>
+<!--②使用style标签，通常定义在head标签中-->
+    <!--优点，样式可以应用到当前页面中，缺点就是不能应用到其它页面中-->
+    <style>
+        /*在style标签中定义样式，需要结合选择器*/
+        /*id选择器*/
+        #content1{
+            font-family:"宋体";
+            text-align:center;
+            border:solid 1px red;
+        }
+
+        /*类选择器*/
+        .cla{
+            font-size: 30px;
+        }
+
+        /*组合选择器*/
+        #content1,.cla{
+            background-color:grey;
+        }
+
+        /*元素选择器*/
+        p{
+            color:blue;
+        }
+
+        /*样式有默认优先级，内联样式优先级最高
+          样式也有先后顺序
+        */
+
+    </style>
+    <!-- /*③外联样式*/-->
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <!--①内联样式 ：使用html标签的style属性-->
+    <!--这种方式与html耦合，再就是不能复用，不推荐使用-->
+	<p style="color:red">师傅领进门，修行靠个人</p>
+	<p >师傅领进门，修行靠个人</p>
+
+	<p id="content1">师傅领进门，修行靠个人</p>
+	<p class="cla">师傅领进门，修行靠个人</p>
+	<p >师傅领进门，修行靠个人</p>
+
+</body>
+</html>

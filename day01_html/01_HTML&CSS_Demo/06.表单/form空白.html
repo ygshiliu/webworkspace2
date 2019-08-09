@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>form空白</title>
+</head>
+<body>
+
+
+        <!--表单作用就是提交用户信息给服务器-->
+        <!--使用form标签来定义一个域,所有表单项必须定义在form标签体中，action用来指定提交信息的地址-->
+        <!--method用来指定请求方式，可以指定get或post.默认是get-->
+        <!--表单项必须指定name属性-->
+
+        <!--
+            当method=get时，单击submit按钮后，会将表单信息以如下方式发送给目标位置
+            success.html?lastName=wang&psw=123&gender=female
+
+            请求路径与请求参数之间使用？连接
+
+            表单项信息我们称之为请求参数，格式是键值对形式，中间使用=连接，多个键值对之间使用&连接
+            键就是name属性指定的值，值就是用户输入的信息或value属性指定的值
+
+            注：若是method=post,则请求参数不会显示在请求路径上
+        -->
+        <form action="success.html" method="get">
+            <!--文本域 -->
+            用户名：<input type="text" name="lastName" ><br>
+            <!--密码框-->
+            密&nbsp;&nbsp;码：<input type="password" name="psw"><br>
+            <!--单选按钮-->
+            <!--像这种需要用户选择的表单项，一方面我们除需要指name与value属性值外，单选按钮是通过name属性值进行分组的-->
+            性&nbsp;&nbsp;别：<input type="radio" name="gender" value="female">女
+            <input type="radio" name="gender" value="male">男 <br>
+            <!--复选框-->
+            爱好：
+            <input type="checkbox" name="hobby" value="drum">打鼓
+            <input type="checkbox" name="hobby" value="guitar">吉他
+            <input type="checkbox" name="hobby" value="violin">小提琴
+            <input type="checkbox" name="hobby" value="piano">钢琴 <br>
+
+            <!--下拉列表-->
+            喜欢的计算机语言：
+            <select name="language" id="">
+                <option value="C">C</option>
+                <option value="php">php</option>
+                <option value="vb">vb</option>
+                <option value="java">java</option>
+            </select>
+
+            <!--提交按钮：将表单信息发送出去-->
+            <input type="submit" value="发送">
+
+        </form>
+</body>
+</html>

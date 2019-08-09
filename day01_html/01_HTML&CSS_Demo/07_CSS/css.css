@@ -1,0 +1,20 @@
+#content1{
+    font-family:"宋体";
+    text-align:right;
+    border:solid 1px red;
+}
+
+/*类选择器*/
+.cla{
+    font-size: 50px;
+}
+
+/*组合选择器*/
+#content1,.cla{
+    background-color:blueviolet;
+}
+
+/*元素选择器*/
+p{
+    color:royalblue;
+}
