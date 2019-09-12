@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>function</title>
+<script type="text/javascript">
+
+    //在js中一切皆对象，函数也是对象
+	//1.函数声明,使用关键字function,形参不需要使用关键字来声明
+    //命名式
+    function f1(param1,param2) {
+        return param1+""+param2;
+    }
+
+
+    // 匿名式
+    var f2=function(param1,param2){
+        return param1*param2;
+    }
+
+	
+	//2.函数调用：就是函数名或函数的引用后跟小括号，如 f1()
+    //注：函数是通过函数名来区分的;函数也没有重载重写这回事
+    //NaN : not a number
+    //如果没有传值，默认为undefined
+    var i = f1(1)
+    alert(i)
+
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

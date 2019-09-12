@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>load01</title>
+    <script>
+        <!--注意，若写在head标签中，首先第1件事，写在window.onload函数中-->
+        //script标签可以定义多次
+        window.onload = function (ev) {
+            var btn = document.getElementById("btnId");
+            btn.onclick = function () {
+                alert("hi,hi")
+            }
+        }
+
+
+    </script>
+</head>
+<body>
+
+    <!--js代码与html耦合，不推荐-->
+	<button id="btnId" <!--onclick="alert('dfsfdsf')"-->>SayHello</button>
+    <script>
+        //这种可以
+        var btn = document.getElementById("btnId");
+        // btn.onclick = function () {
+        //     alert("hi,hi")
+        // }
+
+    </script>
+</body>
+</html>

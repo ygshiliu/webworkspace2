@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Bookstore01/Bookstore01.iml" filepath="$PROJECT_DIR$/Bookstore01/Bookstore01.iml" />
       <module fileurl="file://$PROJECT_DIR$/day01_html/day01_html.iml" filepath="$PROJECT_DIR$/day01_html/day01_html.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day02_js/day02_js.iml" filepath="$PROJECT_DIR$/day02_js/day02_js.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day03_jquery/day03_jquery.iml" filepath="$PROJECT_DIR$/day03_jquery/day03_jquery.iml" />
       <module fileurl="file://$PROJECT_DIR$/javawebworkspace2.iml" filepath="$PROJECT_DIR$/javawebworkspace2.iml" />
     </modules>
   </component>

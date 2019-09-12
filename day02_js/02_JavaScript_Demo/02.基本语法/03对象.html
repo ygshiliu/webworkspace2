@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>对象</title>
+<script type="text/javascript">
+
+    <!--创建对象有两种方式 -->
+    var obj = new Object();
+//    添加属性
+    obj.name="hehe"
+    obj.age= 15
+
+//    获取属性
+//     alert(obj.name)
+
+//    第1种创建对象的方式,可以在创建对象的同时添加属性
+    var obj2={age:19}
+    obj2.name="yiyi"
+    obj2.method1=function(){
+       return "11"
+    }
+
+    alert(obj2.method1())
+
+    /*typeof 一般只能返回如下几个结果："number"、"string"、"boolean"、"object"、"function" 和 "undefined"。
+    * typeof 是一个一元运算，放在一个运算数之前，运算数可以是任意类型。
+    * typeof其实就是判断参数是什么类型的实例，就一个参数
+    * 运算数为数字 typeof(x) = "number"
+    字符串 typeof(x) = "string"
+    布尔值 typeof(x) = "boolean"
+    对象,数组和null typeof(x) = "object"
+    函数 typeof(x) = "function"
+
+    *instanceof 运算符用来测试一个对象在其原型链中是否存在一个构造函数的 prototype 属性。
+    *
+    * */
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

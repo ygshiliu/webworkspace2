@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DOM对象和jQuery对象</title>
+<script type="text/javascript" src="../script/jquery-1.7.2.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//DOM对象 与jQuery对象的区别
+		//DOM对象是使用原生js获取的对象
+        //jQuery对象就是使用核心函数获取的对象
+        //Dom对象与jQuery对象是两回事，是不同的对象
+        //jQuery对象在变量命名时会加$前缀，与Dom对象进行区分
+
+
+		//分别使用DOM对象和jQuery对象获取div中的文本
+	});
+</script>
+</head>
+<body>
+	<div id="testDiv">挤进尚硅谷，注定你优秀！</div>
+	<br/>
+	<button id="dom2dom">使用DOM对象调用DOM方法</button>
+	<button id="dom2jQuery">使用DOM对象调用jQuery方法</button>
+	<button id="jQuery2jQuery">使用jQuery对象调用jQuery方法</button>
+	<button id="jQuery2dom">使用jQuery对象调用DOM方法</button>
+</body>
+</html>

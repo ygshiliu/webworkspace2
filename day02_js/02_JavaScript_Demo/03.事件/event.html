@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>event</title>
+<script type="text/javascript">
+    //借助window.onload事件,在这个页面加载完成后执行程序代码
+    //这里说的事件主要是指事件属性，是标签的一种属性，这些事件属性是js已经定义好的，每一个事件属性都有特定的触发行为
+
+    //事件属性通常与函数结合使用
+
+    window.onload = function(event){
+        var btn = document.getElementById("btnId");
+        //事件是由三部分组成：事件源 事件对象 事件监听器
+        btn.onclick = function (ev) {
+            //this是关键字，代表当前函数所属的对象，它是一个dom对象
+            console.log(this.id)
+		    console.log(ev)
+		    alert("hello,everybody")
+        }
+	};
+
+	/*
+	* 事件及事件处理程序会被放入浏览器的事件队列，事件可归为以下几类：
+
+            浏览器事件：window.load、document.DomContentLoaded等
+            网络请求事件:ajax、websocket
+            用户事件:单双击、鼠标滚动、调整页面大小等
+            计时器事件：setTimeout,setInterval
+	* */
+
+</script>
+</head>
+<body>
+	<button id="btnId">SayHello</button>
+</body>
+</html>

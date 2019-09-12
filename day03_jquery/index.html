@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--引入jquery使用script标签,并指定src属性，注意：引入js库后此标签体中就不能再写js代码-->
+    <script src="jquery-1.7.2.js"></script>
+    <script>
+        //$是jquery的核心函数
+        //alert($)
+
+      /*  window.onload=function (ev) {
+            var btn = document.getElementById("btn");
+            btn.onclick=function(){
+                alert("hello,您好")
+            }
+        }*/
+
+      /*
+      *  $(function(){}) 相当于window.onload功能，在页面加载完成后执行
+      *  $("#btn")获取按钮
+      *  使用jquery的事件方法
+      *
+      * */
+
+        $(function(){
+            var $btn = $("#btn");
+            $btn.click(function(){
+                alert("Hi,everybody!")
+            })
+        })
+    </script>
+</head>
+<body>
+
+    <h1>index jquery</h1>
+
+    <button id="btn">点击我</button>
+</body>
+</html>

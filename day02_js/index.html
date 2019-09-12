@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+    <h1>index</h1>
+
+    <button id="btn">点我</button>
+    <!--在script标签中实现与用户的交互-->
+    <script type="text/javascript">
+        //document是浏览器给我们提供的，在js中可以直接使用
+        //使用document.getElementById方法可以获取页面中所有定义过的标签
+        var btn = document.getElementById("btn")
+        //给标签属性赋值，在里的属性是js内置的事件属性，意思是等待单击，才会执行函数方法
+        btn.onclick = function () {
+            alert("hello, everybody!")
+        }
+
+    </script>
+</body>
+</html>

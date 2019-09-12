@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+	<title>Untitled Document</title>
+	<link rel="stylesheet" type="text/css" href="styleB/css.css" />
+	<script type="text/javascript" src="../../script/jquery-1.7.2.js"></script>
+	<script type="text/javascript">
+		$(function(){
+
+            function delA() {
+                var $tr  = $(this).parents("tr");
+                var name = $tr.children("td:eq(0)").text();
+                if(confirm("您确定要删除"+name+"吗？")){
+                    $tr.remove()
+                }
+                //    取消默认行为
+                return false;
+            }
+
+			//$("a").click(delA)
+            $("a").live("click",delA);
+
+            $("#addEmpButton").click(function () {
+                var name =$("#empName").val();
+                var email =$("#email").val();
+                var salary = $("#salary").val();
+
+                //通过正则表达式对用户输入的数据进行格式验证
+                //正则表达式提供了一个test(),返回布尔值，符合要求返回true,否则false
+                var reg = /^[\u4e00-\u9fa5]{1,}$/;
+                var flag = reg.test(name);
+                if(!flag){
+                    //弹出提示信息，并取消此次行为
+                    alert("请输入正确的中文名称！")
+                    return false;
+                }
+
+                reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/ ;
+                flag = reg.test(email);
+                if(!flag){
+                    //弹出提示信息，并取消此次行为
+                    alert("请输入正确的邮箱格式！")
+                    return false;
+                }
+
+                reg = /^[0-9]{0,}$/ ;
+                flag = reg.test(salary);
+                if(!flag){
+                    //弹出提示信息，并取消此次行为
+                    alert("请输入正确的工资格式！")
+                    return false;
+                }
+
+                var str ="";
+                str += "<tr>"
+                str += "    <td>"+name+"</td>"
+                str += "    <td>"+email+"</td>"
+                str += "    <td>"+salary+"</td>"
+                str += "    <td><a href='#'>Delete</a></td> "
+                str += "</tr>"
+
+                // $(str).appendTo("#employeeTable").parents("table#employeeTable").find("tr:last").find("a").click(delA);
+                // $("a:last").click(delA);
+                //$("#employeeTable").append(str).find("a:last").click(delA)
+
+                $(str).appendTo("#employeeTable");
+                return false;
+            })
+
+		});
+		
+	</script>
+	</head>
+	<body>
+	
+		<table id="employeeTable">
+			<tr>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Salary</th>
+				<th>&nbsp;</th>
+			</tr>
+			<tr>
+				<td>Tom</td>
+				<td>tom@tom.com</td>
+				<td>5000</td>
+				<td><a href="deleteEmp?id=001">Delete</a></td>
+			</tr>
+			<tr>
+				<td>Jerry</td>
+				<td>jerry@sohu.com</td>
+				<td>8000</td>
+				<td><a href="deleteEmp?id=002">Delete</a></td>
+			</tr>
+			<tr>
+				<td>Bob</td>
+				<td>bob@tom.com</td>
+				<td>10000</td>
+				<td><a href="deleteEmp?id=003">Delete</a></td>
+			</tr>
+		</table>
+	
+		<div id="formDiv">
+		
+			<h4>添加新员工</h4>
+	
+			<table>
+				<tr>
+					<td class="word">name: </td>
+					<td class="inp">
+						<input type="text" name="empName" id="empName" />
+					</td>
+				</tr>
+				<tr>
+					<td class="word">email: </td>
+					<td class="inp">
+						<input type="text" name="email" id="email" />
+					</td>
+				</tr>
+				<tr>
+					<td class="word">salary: </td>
+					<td class="inp">
+						<input type="text" name="salary" id="salary" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<button id="addEmpButton" value="abc">
+							Submit
+						</button>
+					</td>
+				</tr>
+			</table>
+	
+		</div>
+	
+	</body>
+</html>

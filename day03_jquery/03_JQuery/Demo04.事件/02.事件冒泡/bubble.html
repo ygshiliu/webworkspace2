@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Untitled Document</title>
+		<style type="text/css">
+			*{margin: 0;padding: 0;}
+			body{font-size: 13px;line-height: 130%;padding: 60px;}
+			div{width: 220px;border: 1px solid #0050D0;background: #96E555;}
+			span{width: 200px;margin: 10px;background: #666666;cursor: pointer;color: white;display: block;}
+		</style>
+		<script type="text/javascript" src="../../script/jquery-1.7.2.js"></script>
+		<script type="text/javascript">
+			$(function(){
+
+			    //所谓冒泡就是指后代触发事件后，与其绑定事件相同的祖先事件也会被触发
+                //防止冒泡直接返回return false;
+
+				$("span").click(function () {
+                    alert("span")
+                    return false;
+                })
+               $("div").click(function () {
+                    alert("div")
+                   return false;
+                })
+                $("body").click(function () {
+                    alert("body")
+                })
+			});
+		</script>
+	</head>
+	<body>
+		<div id="content">
+			外层div元素
+				<span>内层span元素</span>
+			外层div元素
+		</div>
+	</body>
+</html>
+
