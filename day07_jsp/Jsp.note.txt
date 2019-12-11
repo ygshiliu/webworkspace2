@@ -1,0 +1,105 @@
+
+一、JSP介绍
+
+    jsp  (java server page) 是运行在服务器上的动态页面
+
+    jsp = html + servlet
+    jsp本质就是servlet。
+
+二、helloworld.jsp
+    1.首先实现servlet接口
+    2.在配置文件中进行配置
+
+    所以jsp就是servlet
+
+三、jsp运行原理
+
+    jsp文件在运行时，服务器会先将jsp翻译成“文件名_jsp.java”文件，然后再编译成“文件名_jsp.class”文件，最后运行的是class文件
+
+四、JSP语法
+
+    jsp脚本片段
+    jsp表达式
+    jsp声明
+    jsp注释
+
+五、jsp中隐含对象
+
+    HttpServletRequest request;   请求对象
+    HttpServletResponse response; 响应对象
+    PageContext pageContext;
+        -页面上下文对象，也是一个域对象
+        -通过此对象在页面中可以获取其它8个隐含对象
+    HttpSession session; 会话对象
+        -会话代表着从打开浏览器到关闭浏览器的过程就是一次会话
+        -session用来封装与这次会话相关的信息
+        -域对象，可以在不同web资源间共享数据
+
+    ServletContext application; 项目上下文对象，代表整个项目，也是一个域对象
+    ServletConfig config;  当前jsp对象的相关配置信息
+    JspWriter out ;    输出流，可以向页面输出数据
+    Object page = this; 当前servlet实例
+    Throwable exception;  异常对象
+
+
+    四个域对象：
+        pageContext request session application
+        作用范围从小到大的顺序：pageContext<request<session<application
+        共同的方法：
+                setAttribute("key","value"); 向域中设置一个属性
+                getAttribute("key");         从指定域中获取一个属性
+                removeAttribute("key");      从指定域中删除一个属性
+        使用原则：能用小的不用大的
+
+        在jsp页面中，从4个域都可以取到值
+        通过request转发后，pageContext域失效，只能从其它3个域中获取值
+        通过response重定向后，pageContext和request域失效，只能从session和application域中获取值
+        重新打开浏览器后，pageContext request session对象将失效，只有application可以获取值
+        服务器重启后，所有域中的数据都清空
+
+六、JSP指令
+
+    JSP指令用来设置与整个jsp页面相关的属性，它并不直接产生任何可见的输出,而只是告诉引擎如何处理其余JSP页面。
+    指令格式：<%@指令名 属性名1=”属性值1” 属性名2=”属性值2”  %>
+
+    page : 告诉jsp引擎如何解析jsp页面
+        page指令标签可以写在jsp页面的任意位置，通常我们写在页面的首行
+        page属性：
+            contentType 用来设置响应字符集，会被翻译成 response.setContentType("text/html;charset=UTF-8");
+            import  用来导包
+
+            extends 用来指定父类，通常不设置
+            isErrorPage 用来指定当前是否为异常页面。默认为false.当为true时，jsp中会添加一个隐含对象Exception
+            errorPage  用来指定当前页面出错后转发到的页面
+            isELIgnored 是否忽略EL表达式
+            session 是否启用session对象。默认为true
+            language  用来指定jsp解析时使用的语言。目前有且只有一种，java
+            pageEncoding 只用来设置页面中的字符集
+
+    include ： 向当前页面引入资源
+        可在写在任意位置。实际上include指令是原封不动的将目标资源拷贝到当前页面的相应位置上，我们也称这种方式为静态包含。
+        作用：向当前页面引入其它资源,如 jsp页面 html页面
+        注意：不能引入图片视频或像word等文件
+        属性：
+            file 指来指向要引入的资源路径
+
+    taglib ：向当前jsp页面中引入其它标签库
+
+七、jsp动作标签
+
+    格式 ：<jsp:标签名 属性=值>
+
+    jsp:include 通过方法调用向当前jsp页面引入页面;
+    若引入的是jsp页面，jsp页面会单独进行翻译后通过方法调用引入，而include指令则不会翻译引入的jsp页面
+
+    jsp:forward 转发
+    转发相对项目的根目录
+    jsp:param 可以用来指定请求参数，name指定键，value指定值
+    注意：jsp forward如果没有请求参数的话，开始标签与结束标签之间是不能有空格的
+
+八、JSP与Servlet区别
+
+    相同点：jsp本质就是一个servlet，都是servlet
+    不同点：JSP更善于处理页面，而Servlet更善于处理业务
+
+    EL来取代jsp表达式，JSTL来取代JSP脚本片段

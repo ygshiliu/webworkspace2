@@ -1,0 +1,31 @@
+
+
+url格式：http://IP:端口/项目名/资源路径/资源名?key=value&key=value...
+Web服务器主要用来接收客户端发送的请求和响应客户端请求
+
+安装Tomcat：(使用解压版)
+	- 必须配置环境变量java_Home
+	- 必须解压到非中文目录下
+
+Tomcat目录：
+	bin: binary 存放的是可执行的文件。如启动 关闭服务器的命令
+	conf: 存放tomcat的配置文件(xml,properties)
+		-server.xml 配置服务器的端口
+		-web.xml是所有项目的总配置
+	lib: tomcat使用的jar包
+	logs: tomcat启动和关闭过程中生成的日志信息
+	temp: 临时文件
+	webapps: tomcat上发布的所有项目都放在这个目录下
+	work: 服务器在运行过程中动态生成的文件
+
+工程：
+	静态工程：直接创建一个文件夹，里面可以存放.html .css 图片 音频 视频等资源
+	动态工程：
+
+		项目名
+			|--index.html
+			|--META-INF
+			|--WEB-INF
+			     |--classes
+				 |--lib
+				 |--web.xml

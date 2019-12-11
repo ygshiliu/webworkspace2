@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<students>
+
+    <student id="1">
+        <name>hehe</name>
+        <age>20</age>
+        <desc>&gt;>18已成年</desc>
+    </student>
+    <student id="2">
+        <name>xixi</name>
+        <age>17</age>
+       <!-- <desc>&lt;18未成年</desc>-->
+        <desc><![CDATA[
+
+        public static void main (Strings[] args){
+            System.out.print("Hello,everybody!")
+        }
+
+        ]]></desc>
+    </student>
+
+</students>
+
+
+<!--
+声明必须在第一行且顶格显示
+
+有且仅有一个根标签
+标签不能交叉嵌套
+标签必须正确关闭
+标签有属性，必须写在开始标签处，且属性必须有值加引号
+注释不能嵌套
+
+标签名必须符合命名规范
+标签区分大小写
+
+特殊字符也可以使用转义字符
+CDATA中的内容不会xml解析器解析，会原样输出
+-->

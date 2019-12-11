@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--
+    get请求与post请求的区别？
+    1. 通常页面发送的请求都是get请求，只有在表单的method=post时发送的请求才是post请求
+
+    -->
+    <h1><a href="target.html?username=xixi&age=16">get请求：</a></h1>
+
+    <h1>POST请求</h1>
+    <form action="target.html" method="post">
+        <input type="text" name="username" value="xixi"><br>
+        <input type="text" name="age" value="16"><br>
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

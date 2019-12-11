@@ -1,0 +1,139 @@
+
+Servlet是运行在服务器上的小java程序，用来接收和处理从客户端发来的http请求。
+servlet是一个接口，其实也是javaweb中的组件
+javaweb中包括三大组件：servlet Filter Listener
+
+实现组件执行两步：实现接口 和 写配置
+
+一、实现servlet步骤
+
+    1.创建动态web工程
+    2.写一个类实现servlet接口
+        public class firstServlet implements Servlet{}
+    3.需要在web.xml中配置servlet
+        <!--将servlet类注册到服务器中-->
+        <servlet>
+            <!--servlet别名-->
+            <servlet-name>firstServlet</servlet-name>
+            <!--servlet全类名-->
+            <servlet-class>com.wnn.servlet.firstServlet</servlet-class>
+        </servlet>
+        <!--对外发布的访问路径的映射-->
+        <servlet-mapping>
+            <!--找指定别名的servlet标签-->
+            <servlet-name>firstServlet</servlet-name>
+            <!--定义映射的路径-->
+            <url-pattern>/firstServlet</url-pattern>
+        </servlet-mapping>
+
+二、servlet的生命周期
+
+    【生命周期方法好比js中的事件函数，在特定条件下服务器被调用】
+    生命周期好比人从被出生到死亡的过程，这里就是servlet被服务器（servlet容器）创建到销毁的过程
+
+    构造器 ：第1次被访问时调用，调用1次;servlet是单例多线程模式
+    init初始方法 ： 是在构造方法调用之后紧跟着调用，调用1次
+    service方法 ：每次处理请求都会被调用，调用多次
+    destory方法 ：在服务器停止或重启时被调用，调用1次
+
+    The servlet is constructed, then initialized with the init method.
+    Any calls from clients to the service method are handled.
+    The servlet is taken out of service, then destroyed with the destroy method, then garbage collected and finalized.
+
+
+三、访问流程 （如图，略）
+
+四、servlet相关接口
+
+    servletConfig :
+        -代表servlet的配置对象，每个servlet都有自己对应的一个ServletConfig对象.
+        -由服务器创建，直接注入init方法中，我们可以直接使用
+    ServletContext：
+        -代表整个web应用，可以通过servletConfig对象获取。
+        -功能：
+            1.可以获取项目名
+            2.可以获取初始化参数
+            3.可以获取资源的物理路径
+            4.可以作为域对象，在不同web资源间共享数据
+
+            物理路径：就是本地系统，以c: d:等盘符开始的路径，如c:\a.txt
+            虚拟路径：是指在web服务器上的资源对应的路径
+
+            web资源比如图片，html，css ，servlet，且它们都有唯一的虚拟路径
+            http://127.0.0.1:8080/day06/ThridServlet
+            D:\onlineEducation\webworkspace2\out\artifacts\day06_servlet_war_exploded\ThridServlet
+    servletRequest | HttpServletRequest
+        - 代表浏览器发送给服务器的请求报文，是由服务器创建并传递给service方法，我们可以直接使用
+        - 功能：
+            1. 可以接收请求参数
+            2. 可以获取上下文路径
+            3. 可以作为一个域对象，有web资源之间共享数据
+            4. 可以转发到其它资源
+
+            转发：当servlet收到请求后会在服务器中将请求转到其它servlet进行处理
+            转发特点：
+                 浏览器发送了1次请求
+                 浏览器地址栏url没有变化
+
+    servletResponse | HttpServletResponse
+        - 代表服务器发送给浏览器的响应报文，是由服务器创建并传递给service方法，我们可以直接使用
+        - 功能：
+            1.可以向页面返回数据信息
+            2.可以重定向到另外一个资源
+
+            重定向：当servlet收到请求后，会返回浏览器一个状态码302和一个url地址（location)，浏览器看到状态码后，会重新访问location地址
+                HTTP/1.1 302 Found
+                Location: /firstServlet
+            重定向特点：
+                浏览器发送了2次请求
+                浏览器地址栏也发生了变化
+
+五、实现Servlet还可以通过继承GenericServlet 或 HttpServlet 来实现
+
+六、乱码问题
+
+    字符集： ascii  iso8859-1  GBK  GB2312  UTF-8
+
+    乱码是由于编码和解码采用的字符集不一致造成的
+    解决乱码的方法就是统一编码和解码的字符集，我们统一使用utf-8
+
+
+    浏览器 --> 服务器
+    浏览器编码;服务器解码
+
+    浏览器在向服务器传递请求参数时会根据网页中指定的字符集进行编码。如 <meta charset="UTF-8">
+
+    服务器默认使用的字符集是ISO8859-1.分两种情况：
+    如果是Post请求，我们需要手动设置字符集，使用request.setCharacter("utf-8"),必须在获取参数之前即在调用 request.getParamter("")方法之前
+    如果是get请求呢？get请求参数是通过url路径来传递请求参数的，它是由tomcat服务器自动进行编码的。所以我们需要设置server.xml中的connector标签，添加一个属性URIEncoding="utf-8"
+        <Connector URIEncoding="utf-8" port="8080" protocol="HTTP/1.1"
+                       connectionTimeout="20000"
+                       redirectPort="8443" />
+
+    服务器 --> 浏览器
+    服务器编码;浏览器解码
+
+    response.setHeader("content-type","text/html;charset=utf-8")
+    设置响应头，服务器会以指定的字符集进行编码，同时浏览器也会以指定字符集进行解码
+
+    response.setContentType("text/html;charset=utf-8")
+    必须在返回内容之前设置，如response.getWrite().print();
+
+七、路径问题
+
+    路径问题是由转发+页面使用相对路径造成的，因转发时url路径在浏览器端是不发生变化的
+
+    相对路径就是相对当前页面所在的路径。相对路径是非常容易发生变化，路径变化是通过后台转发造成的。
+
+    最终解决方案：页面中避免使用相对路径，推荐使用绝对路径
+
+    绝对路径：就是以/开始的路径
+    /代表什么？分两种情况：
+    如果由浏览器解析，/代表服务器的根目录; 如果是服务器解析，/代表项目的根目录
+
+    浏览器解析情况：页面 + 重定向 . 注：在eclipse中需要加上项目
+    服务器解析情况：web.xml + 转发
+
+
+
+

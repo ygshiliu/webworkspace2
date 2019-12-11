@@ -3,10 +3,23 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Bookstore01/Bookstore01.iml" filepath="$PROJECT_DIR$/Bookstore01/Bookstore01.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Bookstore02/Bookstore02.iml" filepath="$PROJECT_DIR$/Bookstore02/Bookstore02.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Bookstore03/Bookstore03.iml" filepath="$PROJECT_DIR$/Bookstore03/Bookstore03.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Bookstore04/Bookstore04.iml" filepath="$PROJECT_DIR$/Bookstore04/Bookstore04.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Bookstore05/Bookstore05.iml" filepath="$PROJECT_DIR$/Bookstore05/Bookstore05.iml" />
+      <module fileurl="file://$PROJECT_DIR$/out/artifacts/day11_cookie_session_war_exploded/WEB-INF/classes/classes.iml" filepath="$PROJECT_DIR$/out/artifacts/day11_cookie_session_war_exploded/WEB-INF/classes/classes.iml" />
       <module fileurl="file://$PROJECT_DIR$/day01_html/day01_html.iml" filepath="$PROJECT_DIR$/day01_html/day01_html.iml" />
       <module fileurl="file://$PROJECT_DIR$/day02_js/day02_js.iml" filepath="$PROJECT_DIR$/day02_js/day02_js.iml" />
       <module fileurl="file://$PROJECT_DIR$/day03_jquery/day03_jquery.iml" filepath="$PROJECT_DIR$/day03_jquery/day03_jquery.iml" />
-      <module fileurl="file://$PROJECT_DIR$/javawebworkspace2.iml" filepath="$PROJECT_DIR$/javawebworkspace2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day05_http/day05_http.iml" filepath="$PROJECT_DIR$/day05_http/day05_http.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day05_tomcat/day05_tomcat.iml" filepath="$PROJECT_DIR$/day05_tomcat/day05_tomcat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day05_xml/day05_xml.iml" filepath="$PROJECT_DIR$/day05_xml/day05_xml.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day06_servlet/day06_servlet.iml" filepath="$PROJECT_DIR$/day06_servlet/day06_servlet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day07_jsp/day07_jsp.iml" filepath="$PROJECT_DIR$/day07_jsp/day07_jsp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day08_EL&amp;JSTL/day08_EL&amp;JSTL.iml" filepath="$PROJECT_DIR$/day08_EL&amp;JSTL/day08_EL&amp;JSTL.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day11_cookie&amp;session/day11_cookie&amp;session.iml" filepath="$PROJECT_DIR$/day11_cookie&amp;session/day11_cookie&amp;session.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day11_session_Ex/day11_session_Ex1.iml" filepath="$PROJECT_DIR$/day11_session_Ex/day11_session_Ex1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/webworkspace2.iml" filepath="$PROJECT_DIR$/.idea/webworkspace2.iml" />
     </modules>
   </component>
 </project>

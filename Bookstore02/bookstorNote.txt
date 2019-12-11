@@ -1,0 +1,52 @@
+
+书城项目阶段二开发步骤：
+    1.创建动态web工程：Bookstore02
+    2.创建数据库和表
+        create database bookstore;
+        select @@sql_mode;  #1055 sql_mode设置了“only_full_group_by”
+
+        use bookstore;
+
+        drop table bs_user;
+
+        create table bs_user(
+            id int(11) PRIMARY key auto_increment,
+            username VARCHAR(20) unique,
+            password VARCHAR(20),
+            email VARCHAR(50)
+        )
+        #1064 语法错误
+
+    3.创建实体类User
+        private Integer id;
+        private String username;
+        private String password;
+        private String email;
+
+    4.引入JdbcUtil及BaseDao
+        4.1 复制jdbc.properties到项目的src目录下，并修改相关属性值
+        4.2 将相关jar包引入：
+            commons-dbutils-1.3.jar
+            druid-1.1.9.jar
+            mysql-connector-java-5.1.7-bin.jar
+        4.3 复制BaseDao.java到项目的dao目录下
+
+    5.在dao目录下创建UserDao接口
+            //保存用户信息
+            long saveUser(User user);
+
+            //根据用户名，查询user
+            User getUser(String username);
+    6.在dao.impl目录下创建UserDaoImpl实现类,继承BaseDao类并实现UserDao接口
+    5.针对userDaoImpl做单元测试
+        注意：junit 4.11以上版本不在包含hamcrest; 需要单独导入hamcrest-core-1.3.jar
+    6.创建com.wnn.bs.service.UserService接口及实现类UserServiceImpl
+        boolean regist(User user);
+        User login(User user);
+    7.复制书城项目阶段1中的所有页面到阶段2中
+        -修改页面中的路径为绝对路径:index.html login.html regist.html
+        -<base href="/">
+    8.用户注册功能
+        -创建RegistServlet并配置web.xml
+    9.用户登录功能
+        -创建LoginServlet并配置web.xml

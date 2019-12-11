@@ -1,0 +1,211 @@
+
+jstl&el_example.jsp举例：
+    针对JSP页面中的jsp表达式和jsp脚本片段进行优化
+    使用EL表达式来取代jsp表达式
+    使用JSTL来取代jsp脚本片段
+
+一、EL 表达式介绍
+
+   EL ： Expression Language
+   作用：向页面输出数据
+   与jsp表达式有什么区别？输出的数据如果为null，EL表达式则什么都不输出
+
+二、EL使用
+
+    格式：${..}
+    默认会从域中获取对象或数据。如${user}
+
+    pageContext request session application
+    EL表达式默认是从小到大的顺序从域中查找获取数据，找到就显示出来，如果都没有则什么都不输出
+    除String类型外，同时也支持所有的基本数据类型：byte shot int long double float boolean char
+    还有引用类型，集合
+    如果是引用类型或集合，我们还可以调用它们的方法，同时支持对象级联属性
+
+三、EL中的隐含对象
+
+    1.pageContext
+      类型：PageContext
+      作用：与jsp中pageContext对象一样，可以获取其它对象
+    2.pageScope requestScope sessionScope applicationScope
+      类型：map<String,Object>
+      分别对应四个域，依次为：pageContext request session application
+    3.param
+      类型：map<String,String>
+     paramValues
+      类型：map<String,String[]>
+      作用：获取请求参数中的值
+    4.header
+      类型：map<String,String>
+      headerValues
+      类型：map<String,String[]>
+      作用：获取请求头中的值
+
+    5.cookie
+      类型：map<String,cookie>
+      作用：获取cookie
+
+    6.initParam
+      类型：map<String,String>
+
+四、EL运算符
+
+    支持数学运算符 逻辑运算符等
+
+    特别：empty运算符可以对字符串，数组，集合的长度进行判断，如果长度为0则为true,否则为false;
+
+五、JSTL
+
+    JSTL ( JSP Standard Tag Library ) JSP标准标签库
+    由sun公司制定，共有5个标签库，为 核心标签库、格式化标签库、函数标签库、xml标签库及数据库标签库
+
+    1.标签库使用步骤
+        ①导入jar包
+        ②在jsp页面中使用taglib指令标签引入标签库到当前页面
+        ③使用 （类似jsp动作标签）
+
+    2.核心标签库之常用标签
+
+    <%--向域中设置属性
+        var：指定属性名;
+        value:指定属性值;
+        scope:指定域。 默认放在pageContext域中
+    --%>
+    <c:set var="username" value="wangwu" scope="request" ></c:set>
+
+    <%--从域中取出属性并显示在页面中
+        value:指定域中的属性名
+        default:用来设置默认值，如果没有获取到值，则使用默认值
+        escapeXml：是否解析
+    --%>
+    <c:out value="username" default="xx" escapeXml="true"></c:out>
+
+    <%--
+        从域中删除属性
+        var指明要删除的属性名
+        scope 指定域
+    --%>
+    <c:remove var="username" scope="request"></c:remove>
+
+    ---------------------------
+        <%--
+            c:if 满足条件的情况下才会执行,类型java中的if语句
+            test:可以接合EL表达式，接收一个boolean值，为true时则会执行
+            scope:设置域
+            var:指定属性名
+        --%>
+
+        <c:if test="false">
+            <h1>答对了</h1>
+        </c:if>
+
+        <%--
+            c:choose是c:when与c:otherwise的父标签，它们是不能脱离c:choose单独使用的
+            其功能类似java中的if -- else if -- else
+            只有所有c:when都不满足条件时才会执行c:otherwise
+            注：c:when之间要注意满足条件的范围，只要前面满足条件就会被执行，同时跳出判断
+        --%>
+            <c:choose>
+                <c:when test="${score>=90}">
+                    <h1>优</h1>
+                </c:when>
+                <c:when test="${score>=80}">
+                    <h1>良</h1>
+                </c:when>
+                <c:when test="${score>=60}">
+                    <h1>及格</h1>
+                </c:when>
+                <c:otherwise>
+                    <h1>不及格</h1>
+                </c:otherwise>
+            </c:choose>
+    ----------------------------------
+
+        <%--
+        c:forEach 用来实现循环功能
+        begin 起始值
+        end 结束值
+        step:步长 默认1
+        var:用来定义在域中存放的值的属性名，默认是pageContext
+        类似java中的for(int i=0;i<10;i++){}
+
+        --%>
+
+        <c:forEach begin="1" end="10"  var="index">
+            ${index}<br>
+        </c:forEach>
+
+        <hr>
+
+        <%--
+        items用来指向一个集合，可以是数组、list|set、map
+        varStatus:将遍历的元素重新封装成一个新对象javax.servlet.jsp.jstl.core.LoopTagSupport
+            --count用来表示元素在集合中的位置
+            --first：返回一个布尔值，是否是第一个元素，若是则返回true,其它都返回false
+            --last: 返回一个布尔值，是否为最后一个元素，若是返回true,其它都返回false
+            --current: 返回当前元素
+        --%>
+        <%
+            int[] ints = new int[]{1,2,3,4,5};
+            pageContext.setAttribute("ints",ints);
+
+            ////////////////////////
+            User user1 = new User(1,"xixi","xixi@163.com",16);
+            User user2 = new User(2,"hehe","hehe@163.com",17);
+            User user3 = new User(3,"yiyi","yiyi@163.com",18);
+            User user4 = new User(4,"haha","haha@163.com",19);
+
+            List users = new ArrayList();
+            users.add(user1);
+            users.add(user2);
+            users.add(user3);
+            users.add(user4);
+            request.setAttribute("users",users);
+        %>
+        <c:forEach  var="i" items="${users}" varStatus="obj" >
+            ${i}--varStatus:${obj}----step:${obj.step}--begin:${obj.begin}--end:${obj.end}--count:${obj.count}--first:${obj.first}--last:${obj.last}--current:${obj.current}<br>
+        </c:forEach>
+
+    <hr>
+
+    <%--
+        var: 代表一个entity
+        通过key获取元素的键
+        通过value获取元素的值
+    --%>
+    <%
+        Map map = new HashMap();
+        map.put("username","xixi");
+        map.put("age",16);
+        map.put("email","xixi@163.com");
+        request.setAttribute("map",map);
+    %>
+
+        <c:forEach  var="i" items="${map}" varStatus="obj" >
+            ${i}--${i.key} -- ${i.value}<br>
+        </c:forEach>
+
+    ---------------------------------------
+    <%--
+        页面中重定向到另一资源，通过c:redirect
+        注意：它是基于项目名
+    --%>
+
+    <c:redirect url="index.jsp"></c:redirect>
+
+    3.函数标签库
+
+        函数标签库中定义的函数基本上都是对字符串的操作，类似java中的String类中的一些操作
+        通过使用函数标签库时要与EL表达式拼命使用
+
+        步骤：
+        ①导入jar包
+        ②在jsp页面引入<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+        ③使用
+
+            endsWith:${fn:endsWith(str,"end")}<br>
+            substring:${fn:substring(str, 5, 8)}<br>
+            contains:${fn:contains(str,"end" ) }<br>
+            length:${fn:length(str)}<br>
+            startsWith:${fn:startsWith(str, "he")}<br>
+            trim:${fn:trim(str)}<br>
+

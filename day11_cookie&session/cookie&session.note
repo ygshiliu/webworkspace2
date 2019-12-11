@@ -1,0 +1,59 @@
+
+ http协议特点：
+    ①纯文本
+    ②无状态
+
+ 一、cookie
+    cookie是一个类，由服务器创建并发送给浏览器保存。之后浏览器再访问服务器时就会带着cookie发送到服务器
+
+    特点：
+        数据保存在浏览器端
+        每次浏览器向服务器发送请求时都会携带cookie数据
+
+    操作：
+        ① 可以指定cookie的有效时间，通过setMaxAge()
+
+            * 当值为正数时，则有效时间为指定的值
+            * Set-Cookie: Goods1=trousers; Expires=Mon, 18-Nov-2019 07:54:21 GMT 格林威治时间，与我们差8个小时
+            * 当值为0时，则表示立即失效
+            * Set-Cookie: Goods1=trousers; Expires=Thu, 01-Jan-1970 00:00:10 GMT
+            * 当值负数时，表示一次会话，也是默认值
+            * Set-Cookie: Goods1=trousers
+
+        ② 可以指定cookie的路径，通过setPath()来设置路径
+
+            //Set-Cookie: Goods1=trousers; Path=""
+            //cookie默认的路径就是项目根目录
+            trousers.setPath(request.getContextPath());
+
+            //Set-Cookie: Goods2=laptop; Path=/aaa/bbb
+            //只有访问指定路径下的资源时才会携带此cookie
+            laptop.setPath(request.getContextPath()+"/aaa/bbb");
+
+    缺点：
+        是通过请求报文与响应报文在浏览器与服务器间传输的，无形中增加了网络传输的流量
+        明文显示，安全性差
+        不同浏览器对cookie也有大小限制
+
+二、Session
+
+    Session的作用就是在服务器端保存一些用户的数据，然后传递给用户一个名字为JSESSIONID的Cookie，
+    这个JESSIONID对应这个服务器中的一个Session对象，通过它就可以获取到保存用户信息的Session
+
+    HttpSession API
+
+    session工作原理：
+        第一步：调用request.getSession()时，先去获取JSESSION的cookie，看有对应的sessionId号吗？
+        第二步：如果没有，则直接创建session对象并放入一个sessionMap中;同时会创建一个JSESSIONID的cookie发送给浏览器保存
+        第三步：如果有，则直接根据JSESSION对应的值去sessionMap中查找，找到则返回，没有则重新执行第二步
+
+    session的活化钝化:
+        session域中的对象若随session一起活化钝化，则对象需要实现java.io.Serializable接口
+        服务器默认已经实现了对session的活化钝化，我们不需要做任何设置。如果有必要可以在conf/context.xml文件中配置如下信息：
+        <Manager className="org.apache.catalina.session.PersistentManager" maxIdleSwap="1">
+          <Store className="org.apache.catalina.session.FileStore" directory="mySession"/>
+        </Manager>
+
+三、session&cookie的练习
+
+    通常我们使用session与cookie做登录登出功能。

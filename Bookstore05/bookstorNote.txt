@@ -1,0 +1,291 @@
+
+书城项目阶段二开发步骤：
+    1.创建动态web工程：Bookstore02
+    2.创建数据库和表
+        create database bookstore;
+        select @@sql_mode;  #1055 sql_mode设置了“only_full_group_by”
+
+        use bookstore;
+
+        drop table bs_user;
+
+        create table bs_user(
+            id int(11) PRIMARY key auto_increment,
+            username VARCHAR(20) unique,
+            password VARCHAR(20),
+            email VARCHAR(50)
+        )
+        #1064 语法错误
+
+    3.创建实体类User
+        private Integer id;
+        private String username;
+        private String password;
+        private String email;
+
+    4.引入JdbcUtil及BaseDao
+        4.1 复制jdbc.properties到项目的src目录下，并修改相关属性值
+        4.2 将相关jar包引入：
+            commons-dbutils-1.3.jar
+            druid-1.1.9.jar
+            mysql-connector-java-5.1.7-bin.jar
+        4.3 复制BaseDao.java到项目的dao目录下
+
+    5.在dao目录下创建UserDao接口
+            //保存用户信息
+            long saveUser(User user);
+
+            //根据用户名，查询user
+            User getUser(String username);
+    6.在dao.impl目录下创建UserDaoImpl实现类,继承BaseDao类并实现UserDao接口
+    5.针对userDaoImpl做单元测试
+        注意：junit 4.11以上版本不在包含hamcrest; 需要单独导入hamcrest-core-1.3.jar
+    6.创建com.wnn.bs.service.UserService接口及实现类UserServiceImpl
+        boolean regist(User user);
+        User login(User user);
+    7.复制书城项目阶段1中的所有页面到阶段2中
+        -修改页面中的路径为绝对路径:index.html login.html regist.html
+        -<base href="/">
+    8.用户注册功能
+        -创建RegistServlet并配置web.xml
+    9.用户登录功能
+        -创建LoginServlet并配置web.xml
+===================================================================
+书城项目阶段三：
+
+    1.修改html变成jsp页面
+        ①在每一个html文件中加入page指令标签
+        ②将html页面的后续修改为.jsp
+        ③修改html页面中的url路径及servlet中的url路径
+        ④提取页面公共代码，使用include包含进来
+            head.jsp 页面头相关
+            menu.jsp 菜单相关
+            manager.jsp
+    2.显示提示信息
+    3.表单数据回显示
+    4.使用EL和JSTL来优化页面回显
+    5.优化servlet，创建BaseServlet
+
+================================================================
+书城项目阶段四:
+
+    图书模块的增删改查及分页功能。
+
+1. 创建bs_book表
+    create table bs_book(
+        id int(11) auto_increment primary key,
+        title varchar(50),
+        author varchar(20),
+        price double(11,2),
+        sales int(11),
+        stock int(11),
+        img_path varchar(100)
+     )
+2. 创建实体Book:
+    public class Book {
+        private Integer id;
+        private String title;
+        private String author ;
+        private int price;
+        private int sales;
+        private int stock;
+        private String img_path = "static/img/default.jpg";
+     }
+3.创建BookDao及实现类BookDaoImpl
+        /**
+         * 定义与图书操作相关的方法
+         */
+        public interface BookDao {
+
+            //保存图书
+            public int saveBook(Book book);
+            //修改图书
+            public int updateBook(Book book);
+            //删除图书
+            public int deleteBook(String bookId);
+            //查找一本图书
+            public Book getBookById(String bookId);
+            //查找图书列表
+            public List<Book> getAllBook();
+
+        }
+
+        添加图书sql: String sql = "insert into bs_book(title,author,price,sales,stock,img_path) values(?,?,?,?,?,?)";
+        修改图书sql: String sql="update bs_book set title=?,author=?,price=?,sales=?,stock=?,img_path=? where id=?";
+        删除图书sql: String sql = "delete from bs_book where id=?";
+        查一本图书sql: String sql = "select id,title,author,price,sales,stock,img_path imgPath from bs_book where id=?";
+        查图书列表sql: String sql = "select id,title,author,price,sales,stock,img_path imgPath from bs_book ";
+
+4.写BookDaoImpl单元测试类
+5.创建BookService接口及实现类BookServiceImpl
+    /**
+     * 图书操作相关的业务方法
+     */
+    public interface BookService {
+        //保存图书
+        public boolean saveBook(Book book);
+        //修改图书
+        public boolean updateBook(Book book);
+        //删除图书
+        public boolean deleteBook(String bookId);
+        //查找一本图书
+        public Book getBookById(String bookId);
+        //查找图书列表
+        public List<Book> getAllBook();
+    }
+ 6.创建ManagerServlet处理管理员对图书操作的请求
+
+    1)添加图书操作
+        ①创建ManagerServlet.savebook()方法，向数据库添加图书
+        ②修改book_edit.jsp页面
+            -form表单action提交的url路径："ManagerServlet?method=savebook"及method="post"
+            -修改form中的表单项的name属性
+
+    2)展示图书列表
+        ①创建ManagerServlet.getallbook()方法，查找出所有的图书展示在book_manager.jsp页面中
+        ②修改WEB-INF/include/manager.jsp中的图书管理标签路径：ManagerServlet?method=getallbook
+        ③修改book_manager.jsp页面，使用JSTL与EL将图书列表展示出来
+
+    3)修改图书
+        ①创建ManagerServlet.getbookbyid()方法，根据图书id查找到图书并设置到域中传给book_edit.jsp页面
+        ②修改book_edit.jsp页面中的form表单的路径
+        ③创建ManagerServlet.updatebook()方法，修改图书信息.重定向到ManagerServlet?method=getallbook
+        ④修改book_manager.jsp页面修改标签路径
+
+    4)优化增加与修改图书功能
+        ①创建ManagerServlet.saveorupdate()方法，根据bookid请求参数是否有值判断增加还是修改
+        ②修改book_edit.jsp页面
+
+    5)删除图书功能
+        ①创建ManagerServlet.deletebook()方法，根据bookId删除指定图书
+        ②修改book_manager.jsp页面删除标签的路径：ManagerServlet?method=deletebook&bookId=?，
+            然后重定向到ManagerServlet?method=getallbook
+        ③添加ajax判断，提高用户体验
+             $(function () {
+                $(".delA").click(function(){
+                    var title = $(this).parents("tr").find("td:first").text();
+                    var b = confirm("您确定要删除< "+title+" >图书吗?");
+                    if(!b){
+                        return false;
+                    }
+                })
+            })
+
+    6)后台分页功能
+        ①创建page实体类
+            public class Page<T> {
+                private List<T> list;
+                private int pageSize;
+                private int pageNo;
+                private int totalRecord;
+                private int totalpage;
+                private int index;
+            }
+        ②在BookDao接口中定义分页方法并在BookDaoImpl中实现
+               //分页查找图书列表
+                public Page<Book> getPage(Page<Book> page);
+        ③在BookService接口中定义分页方法并在BookServiceImpl中实现
+            //    分页查找图书
+            public Page<Book> getPage(String pageSizeStr, String pageNoStr);
+        ④创建ManagerServlet.getpage()方法,处理分页请求
+        ⑤修改book_manager.jsp页面中的分页标签部分及数据显示
+            -完善页面跳转
+        ⑥修改WEB-INF/include/manager.jsp中图书管理标签路径：ManagerServlet?method=getpage
+
+7.客户端图书分页及带条件分页查询
+
+    >不带价格查询的分页功能
+        1）创建客户端ClientServlet继承BaseServlet,处理客户端的请求
+        2）客户端图书不带条件分页 （与后台图书分页一样的）getpage()
+        3)复制index.jsp到pages/目录下，并改名client.jsp
+        4)修改index.jsp页面中的内容，用<jsp:forward page="ClientServlet?method=getpage&pageNo=1"></jsp:forward>替换
+        5)创建page.jsp页面，提取page功能，并修改后台管理分页部分
+
+    >带价格查询的分页功能
+        1)创建 ClientServlet.getpagebyprice()来处理带价格查询的分页请求
+        2)在BookDao中定义新方法并实现：
+            public Page<Book> getPageByPrice(Page<Book> page,double min,double max);
+        3)在BookService中定义带价格分页方法及实现：
+            public Page<Book> getPageByPrice(String pageNo,String pageSize,String minstr,String maxstr)
+
+====================================================================
+书城项目阶段五：
+
+一、用户的登录与退出
+
+    1. 修改/WEB-INF/include/menu.jsp中的代码
+    2. 在用户登录请求时将用户信息放入到session域中
+    3. 在用户点击"注销"链接时，在请求处理中将session对象失效即可
+        -修改menu.jsp中的注销路径：<a href="UserServlet?method=logout">注销</a>
+        -在userServlet类中添加logout方法，用来处理注销请求
+
+二、验证码
+
+    解决的是表单重复提交
+    什么是表单的重复提交？
+        同一个表单向服务器提交多次相同，重复，无意义的数据，这就是表单的重复提交。
+        问题会占用服务器资源，降低服务器性能
+
+    产生表单重复提交的原因有很多：
+        -网络慢，会导致用户提交之后没反应，造成用户多次提交
+        -后台使用转发而不重定向，会导致提交的信息一直保存在url中，多次刷新也会造成重复提交
+
+    解决方法：可以使用令牌token机制。
+
+    令牌原理 ：
+        令牌其实就是一个标识。由服务器产生令牌，然后交给浏览器一份，自己保存一份，当前浏览器提交表单时会携带着令牌，
+        之后服务器将浏览器提交的令牌与服务器保存的令牌进行对比。
+        若一致说明是第一次提交表单，则正常处理请求，同时将服务器令牌删除;若不一致，说明是重复提交表单，则返回不处理提交请求
+
+    实现步骤：
+        1.加入kaptcha.jar
+        2.在web.xml中配置KaptchaServlet
+            -在KaptchaServlet中会产token令牌，放入session域中，同时将令牌创建成一个图片并返回这个流
+            -我们只要请求这个kaptchaServlet就可以获取这个令牌图片
+        3.使用
+
+三、购物车
+
+    1.实现购物车有三种方式：cookie session 数据库
+    2.分析购物车并创建实体类：
+           购物车Cart
+               List<CartItem> list;
+               int totalCount;
+               double totalAmount;
+               添加购物项
+               删除购物项 deleteCartItemBybookid
+               修改购物项 updateCountByBookid
+               清空购物车 clearCart
+
+           购物项CartItem
+               int count;
+               double amount;
+               Book book;
+    3.完成购物车相关功能
+
+        1) 创建CartServlet来统一处理购物车请求.注意继承BaseServlet
+            //添加图书到购物车
+            protected void addBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            //删除图书
+            protected void deleteBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            //修改图书数量
+            protected void updateBookCount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            //清空购物车
+            protected void clearCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        2）实现 添加购物车
+            -在首页给“添加购物车”绑定单击事件
+            -处理CartServlet.addBook(..)方法
+            -处理首页的用户提示功能信息
+        3) 购物车展示
+            -因为购物车是基于session的，不需要servlet处理
+            -修改cart.jsp购物车页面即可
+        4) 删除购物项
+            -修改cart.jsp页面中删除url：CartServlet?method=deleteBook&bookid=${item.book.id}
+            -处理CartServlet.deleteBook(..)方法
+        5）清空购物车
+            -修改cart.jsp页面中清空url：CartServlet?method=clearCart
+            -处理CartServlet.clearCart(..)方法
+        6)修改购物项数量
+            -将cart.jsp中购物项的数量修改成文本输入框：<input value="${item.count}" id="count">
+            -给此文本框绑定change事件
+            -处理CartServlet.updateBookCount(..)方法
